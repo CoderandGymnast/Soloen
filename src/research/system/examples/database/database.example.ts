@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
-import {Photo} from "./entities/Photo";
+import { createConnection, getRepository } from "typeorm";
+import { Photo } from "./entities/Photo";
 
 createConnection({
     type: "mysql",
@@ -15,6 +15,7 @@ createConnection({
     synchronize: true,
     logging: false
 }).then(connection => {
-    console.log("Connected")
+    const repo = getRepository(Photo)
+    console.log(repo)
 
 }).catch(error => console.log(error));
