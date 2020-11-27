@@ -7,6 +7,7 @@ import { Wallet } from './entities/wallet.entity';
 import { AddressController } from './controllers/address.controller';
 import { AddressService } from './services/address.service';
 import { Address } from './entities/address.entity';
+import { Synchronizer } from './worker/synchronizer.worker';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { Address } from './entities/address.entity';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [Wallet, Address],
+      entities: [Wallet, Address, Synchronizer.Progress],
       synchronize: true,
       logging: false
     }),

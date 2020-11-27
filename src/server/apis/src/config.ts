@@ -13,7 +13,12 @@ const config = {
         tables: {
             wallet: process.env.DB_TABLE_WALLET || "wallet",
             address: process.env.DB_TABLE_ADDRESS || "address",
+            progress: process.env.DB_PROGRESS || "progress",
         }   
+    },
+    nodes: {
+        fullHost: process.env.NODES_FULL_HOST || "https://api.shasta.trongrid.io",
+        eventServer: process.env.NODES_EVENT_SERVER || "https://api.shasta.trongrid.io"
     }
 }
 
