@@ -12,6 +12,7 @@ const config = {
         password: process.env.DB_PASSWORD || "",
         tables: {
             wallet: process.env.DB_TABLE_WALLET || "wallet",
+            address: process.env.DB_TABLE_ADDRESS || "address",
         }   
     }
 }

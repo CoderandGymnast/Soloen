@@ -5,7 +5,7 @@ class CreateWalletRequestDTO {
 }
 
 class CreateWalletResponseDTO {
-    id: string
+    id: number
 }
 
 export { CreateWalletRequestDTO, CreateWalletResponseDTO, MAX_LENGTH_LABEL}

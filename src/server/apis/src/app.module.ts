@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controllers/wallet.controller';
+import { WalletController } from './controllers/wallet.controller';
 import { WalletService } from './services/wallet.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from "./config"
 import { Wallet } from './entities/wallet.entity';
+import { AddressController } from './controllers/address.controller';
+import { AddressService } from './services/address.service';
+import { Address } from './entities/address.entity';
 
 @Module({
   imports: [
@@ -15,12 +18,12 @@ import { Wallet } from './entities/wallet.entity';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [Wallet],
+      entities: [Wallet, Address],
       synchronize: true,
       logging: false
     }),
   ],
-  controllers: [AppController],
-  providers: [WalletService],
+  controllers: [WalletController, AddressController],
+  providers: [WalletService, AddressService],
 })
 export class AppModule {}

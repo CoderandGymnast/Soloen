@@ -7,6 +7,6 @@ export class Wallet{
     @PrimaryGeneratedColumn()
     id?: number
 
-    @Column({ nullable: true, length: 256 }) /** [WARNING]: Changing rules would delete all data. */
+    @Column({ nullable: true, length: MAX_LENGTH_LABEL }) /** [WARNING]: Changing rules would delete all data. */
     label?: string
 }

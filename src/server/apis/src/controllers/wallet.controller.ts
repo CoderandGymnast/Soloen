@@ -4,7 +4,7 @@ import { WalletService } from '../services/wallet.service';
 import { CreateWalletRequestDTO, CreateWalletResponseDTO, MAX_LENGTH_LABEL }  from "../dtos/wallet/wallet.dto"
 
 @Controller({path: "wallet"})
-export class AppController {
+export class WalletController {
   constructor(
     private readonly walletService: WalletService,
     private readonly connection: Connection
@@ -17,8 +17,6 @@ export class AppController {
     
     if(request.label.length >= MAX_LENGTH_LABEL) throw new BadRequestException(`MAX LENGTH LABEL: ${MAX_LENGTH_LABEL}`)
 
-    const result = await this.walletService.insert({...request})
-    
-    return {id: result.raw.insertId}
+    return await this.walletService.create({...request})
   }
 }
