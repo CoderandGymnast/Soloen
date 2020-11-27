@@ -15,7 +15,6 @@ async function bootstrap() {
     eventServer: config.nodes.eventServer
   }
   const nodeClient = new NodeClient(options)
-  await nodeClient.connectToNodes()
 
   const synchronizer = new Synchronizer(nodeClient, [])
 

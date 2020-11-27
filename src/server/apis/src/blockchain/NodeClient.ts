@@ -1,3 +1,4 @@
+import { stat } from "fs"
 import { Synchronizer } from "src/worker/synchronizer.worker"
 import TronWeb from "tronweb"
 import { getRepository } from "typeorm"
@@ -12,10 +13,17 @@ export class NodeClient {
         private readonly options: NodeClient.Options,
     ) {
         this.nodeClients = new TronWeb(this.options)
+        this.checkConnection()
     }
 
-    async connectToNodes() {
-        return await this.nodeClients.isConnected()
+    private async checkConnection() {
+        const state = await this.nodeClients.isConnected()
+        const isConnected = !Object.entries(state).map(([node, status]) => {
+            if(!status) console.log(`[WARNING]: Could not connect to '${node}'`)
+            return status
+        }).includes(false)
+        if(!isConnected) throw Error("Could not connect to Tron nodes")
+        console.log("[NOTIFICATION]: Established connection to Tron nodes")
     }
 
     async getCurrentBlock(): Promise<NodeClient.Block> {

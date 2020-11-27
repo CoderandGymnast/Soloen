@@ -19,7 +19,7 @@ export class Synchronizer {
     ) { }
 
     async start() {
-        console.log("Synchronizer is processing...")
+        console.log("[NOTIFICATION]: Synchronizer is processing...")
         await this.init()
         this.process()
     }
@@ -29,7 +29,7 @@ export class Synchronizer {
         this.trackedData.systemBlockNumber = progress.blockNumber
         const currentBlock = await this.nodeClient.getCurrentBlock()
         const currentBlockNumber = currentBlock.block_header.raw_data.number
-        if (progress.blockNumber > currentBlockNumber) throw new Error(`[ERROR] (nonsense data):  System Block number '${progress.blockNumber}' - Latest Block number: '${currentBlockNumber}'`)
+        if (progress.blockNumber > currentBlockNumber) throw new Error(`(nonsense data):  System Block number '${progress.blockNumber}' - Latest Block number: '${currentBlockNumber}'`)
         else if (progress.blockNumber < currentBlockNumber) {
             this.trackedData.unprocessedBlocks = await this.nodeClient.getBlockRange(progress.blockNumber + 1, progress.blockNumber + MAX_BLOCK_RANGE - 1)
         } else {
@@ -47,7 +47,7 @@ export class Synchronizer {
             const systemBlockNumber = this.trackedData.systemBlockNumber
 
             if (systemBlockNumber > currentBlockNumber) {
-                throw new Error(`[ERROR] (nonsense data):  System Block number '${systemBlockNumber}' - Latest Block number: '${currentBlockNumber}'`)
+                throw new Error(`(nonsense data):  System Block number '${systemBlockNumber}' - Latest Block number: '${currentBlockNumber}'`)
             } else if (systemBlockNumber === currentBlockNumber) {
                 this.notify()
                 await this.sleep()
@@ -84,7 +84,7 @@ export class Synchronizer {
         await this.emit(block)
         const blockNumber = block.block_header.raw_data.number
         await this.nodeClient.updateSynchronizationProgress({ blockNumber })
-        console.log(`Finish process Block number '${blockNumber}'`)
+        console.log(`[EVENT]: Finish process Block number '${blockNumber}'`)
         this.trackedData.systemBlockNumber = blockNumber
     }
 
