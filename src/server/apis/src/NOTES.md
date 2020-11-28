@@ -12,3 +12,6 @@
 2. Optimize add entities to module.
 3. Catch queries errors.
 4. Gracefully Shutdown mechanism for the Synchronizer.
+5. General source of balance.
+6. Change datatype for balance.
+7. Change tracked data's structure at Address Tracker.

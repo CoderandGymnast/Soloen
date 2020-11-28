@@ -19,10 +19,10 @@ export class NodeClient {
     private async checkConnection() {
         const state = await this.nodeClients.isConnected()
         const isConnected = !Object.entries(state).map(([node, status]) => {
-            if(!status) console.log(`[WARNING]: Could not connect to '${node}'`)
+            if (!status) console.log(`[WARNING]: Could not connect to '${node}'`)
             return status
         }).includes(false)
-        if(!isConnected) throw Error("Could not connect to Tron nodes")
+        if (!isConnected) throw Error("Could not connect to Tron nodes")
         console.log("[NOTIFICATION]: Established connection to Tron nodes")
     }
 
@@ -75,14 +75,37 @@ export namespace NodeClient {
             },
             witness_signature: string
         }
-        transactions: [
-            {
-                ret: any[],
-                signature: any[],
-                txID: string,
-                raw_data: any[],
-                raw_data_hex: string
-            }
-        ]
+        transactions: Transaction[]
+    }
+
+    export class Transaction {
+        ret: any[]
+        signature: any[]
+        txID: string
+        raw_data: RawData
+        raw_data_hex: string
+    }
+
+    class RawData {
+        contract: Contract[]
+        ref_block_bytes: string
+        ref_block_hash: string
+        expiration: number
+        fee_limit: number
+        timestamp: number
+    }
+
+    export class Contract {
+        parameter: {
+            value: Value,
+            type_url: string
+        }
+        type: string
+    }
+
+    class Value {
+        amount: number
+        owner_address: string
+        to_address: string
     }
 }

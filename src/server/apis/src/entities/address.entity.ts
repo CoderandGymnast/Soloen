@@ -18,8 +18,8 @@ export namespace Address {
         @Column({ nullable: true, length: MAX_LENGTH_LABEL }) /** [WARNING]: Changing rules would delete all data. */
         label?: string
 
-        @Column({ nullable: true })
-        balance?: string
+        @Column({ default: "0" })
+        balance?: string = "0"
 
         @Column({ default: Status.INACTIVE })
         status?: Address.Status = Status.INACTIVE

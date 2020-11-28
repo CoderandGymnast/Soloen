@@ -1,3 +1,4 @@
+import { Controller } from "@nestjs/common";
 import { NodeClient } from "src/blockchain/NodeClient";
 import config from "src/config";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
@@ -84,7 +85,6 @@ export class Synchronizer {
         await this.emit(block)
         const blockNumber = block.block_header.raw_data.number
         await this.nodeClient.updateSynchronizationProgress({ blockNumber })
-        console.log(`[EVENT]: Finish process Block number '${blockNumber}'`)
         this.trackedData.systemBlockNumber = blockNumber
     }
 

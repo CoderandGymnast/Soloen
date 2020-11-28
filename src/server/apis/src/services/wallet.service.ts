@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateWalletResponseDTO } from 'src/dtos/wallet/wallet.dto';
 import { getRepository, Repository } from 'typeorm';
+import { EventEmitter } from 'events';
 import { Wallet } from '../entities/wallet.entity';
 
 @Injectable()
 export class WalletService {
 
-  @InjectRepository(Wallet)
-  private repository: Repository<Wallet>
+  constructor(
+    @InjectRepository(Wallet)
+    private readonly repository: Repository<Wallet>,
+  ) { }
 
   async create(wallet: Wallet): Promise<CreateWalletResponseDTO> {
     const result = await this.repository.insert(wallet)
@@ -18,6 +21,6 @@ export class WalletService {
   }
 
   async find(id: number) {
-    return await this.repository.find({id})
+    return await this.repository.find({ id })
   }
 }

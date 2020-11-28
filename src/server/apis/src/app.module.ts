@@ -8,6 +8,7 @@ import { AddressController } from './controllers/address.controller';
 import { AddressService } from './services/address.service';
 import { Address } from './entities/address.entity';
 import { Synchronizer } from './worker/synchronizer.worker';
+import {EventEmitter} from "events"
 
 @Module({
   imports: [
@@ -23,9 +24,9 @@ import { Synchronizer } from './worker/synchronizer.worker';
       synchronize: true,
       logging: false
     }),
-    TypeOrmModule.forFeature([Wallet, Address.Model])
+    TypeOrmModule.forFeature([Wallet, Address.Model]),
   ],
   controllers: [WalletController, AddressController],
-  providers: [WalletService, AddressService],
+  providers: [WalletService, AddressService, EventEmitter],
 })
 export class AppModule {}

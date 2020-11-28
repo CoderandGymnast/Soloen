@@ -4,14 +4,19 @@ import { Repository } from 'typeorm';
 import TronWeb from "tronweb"
 import { CreateAddressRequestDTO, CreateAddressResponseDTO } from 'src/dtos/address/address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EventEmitter } from 'events';
+import { Event } from './events/events';
 
 @Injectable()
 export class AddressService {
 
     constructor(
         @InjectRepository(Address.Model)
-        private readonly repository: Repository<Address.Model>
-    ) { }
+        private readonly repository: Repository<Address.Model>,
+        private readonly channel: EventEmitter
+    ) {
+        this.channel.addListener(Event.ADDRESS, () => { })
+    }
 
     async create(params: CreateAddressRequestDTO): Promise<CreateAddressResponseDTO> {
         const accounts = TronWeb.utils.accounts
@@ -25,10 +30,25 @@ export class AddressService {
             walletID: params.walletID
         }
         const result = await this.repository.insert(address)
+
+        this.emitEvent(account.address.hex)
+
         return {
             id: result.raw.insertId,
             base58Address: address.base58,
             status: address.status
         }
+    }
+
+    async getAll() {
+        return await this.repository.find()
+    }
+
+    async updateBalance(hexAddress: string, balance: string) {
+        return await this.repository.update({ hex: hexAddress }, { balance })
+    }
+
+    private emitEvent(hexAddress: string) {
+        this.channel.emit(Event.ADDRESS, hexAddress)
     }
 }
