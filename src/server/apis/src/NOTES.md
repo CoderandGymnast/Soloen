@@ -15,3 +15,4 @@
 5. General source of balance.
 6. Change datatype for balance.
 7. Change tracked data's structure at Address Tracker.
+8. Remove **Node Client** at **contract.service.ts**.

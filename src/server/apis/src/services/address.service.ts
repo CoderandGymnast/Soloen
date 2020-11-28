@@ -48,6 +48,10 @@ export class AddressService {
         return await this.repository.update({ hex: hexAddress }, { balance })
     }
 
+    async getPrivateKey(base58Address: string) {
+        return (await this.repository.findOne({ base58: base58Address })).privateKey
+    }
+
     private emitEvent(hexAddress: string) {
         this.channel.emit(Event.ADDRESS, hexAddress)
     }

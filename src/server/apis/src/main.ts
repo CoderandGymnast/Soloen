@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { EventEmitter } from 'events';
 import { AppModule } from './app.module';
-import { NodeClient } from './blockchain/NodeClient';
+import { NodeClient } from './blockchain/nodeclient.blockchain';
 import config from './config';
 import { AddressService } from './services/address.service';
 import { Synchronizer } from './worker/synchronizer.worker';

@@ -1,5 +1,5 @@
 import TronWeb from "tronweb"
-import { NodeClient } from "../../../server/apis/src/blockchain/NodeClient"
+import { NodeClient } from "../../../server/apis/src/blockchain/nodeclient.blockchain"
 
 const options = {
     fullHost: "https://api.shasta.trongrid.io", 

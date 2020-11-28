@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common";
-import { NodeClient } from "src/blockchain/NodeClient";
+import { NodeClient } from "src/blockchain/nodeclient.blockchain";
 import config from "src/config";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 

@@ -2,17 +2,13 @@ import { BadRequestException, Body, Controller, Post } from "@nestjs/common"
 import { CreateAddressRequestDTO, CreateAddressResponseDTO, MAX_LENGTH_LABEL } from "src/dtos/address/address.dto"
 import { AddressService } from "src/services/address.service"
 import { WalletService } from "src/services/wallet.service"
-import { Connection } from "typeorm"
 
 @Controller({ path: "address" })
 export class AddressController {
     constructor(
         private readonly addressService: AddressService,
         private readonly walletService: WalletService,
-        // private readonly connection: Connection
-    ) {
-        // addressService.connectToDB()
-    }
+    ) { }
 
     @Post("/create")
     async create(@Body() request: CreateAddressRequestDTO): Promise<CreateAddressResponseDTO> {

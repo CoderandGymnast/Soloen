@@ -1,4 +1,4 @@
-import { NodeClient } from "src/blockchain/NodeClient";
+import { NodeClient } from "src/blockchain/nodeclient.blockchain";
 import { Synchronizer } from "../synchronizer.worker";
 import { EventEmitter } from "events"
 import { Event } from "src/services/events/events";
