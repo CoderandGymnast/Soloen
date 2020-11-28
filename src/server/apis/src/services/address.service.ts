@@ -7,16 +7,16 @@ import { CreateAddressRequestDTO, CreateAddressResponseDTO } from 'src/dtos/addr
 @Injectable()
 export class AddressService {
 
-    private repository: Repository<Address>
+    private repository: Repository<Address.Model>
 
     connectToDB() {
-        this.repository = getRepository(Address)
+        this.repository = getRepository(Address.Model)
     }
 
     async create(params: CreateAddressRequestDTO): Promise<CreateAddressResponseDTO> {
         const accounts = TronWeb.utils.accounts
         const account = accounts.generateAccount()
-        const address: Address = {
+        const address: Address.Model = {
             label: params.label,
             privateKey: account.privateKey,
             publicKey: account.publicKey,
@@ -27,7 +27,8 @@ export class AddressService {
         const result = await this.repository.insert(address)
         return {
             id: result.raw.insertId,
-            base58Address: address.base58
+            base58Address: address.base58,
+            status: address.status
         }
     }
 }

@@ -1,28 +1,43 @@
 import { MAX_LENGTH_LABEL } from "src/dtos/address/address.dto";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import config from "../config"
 import { Wallet } from "./wallet.entity";
 
-@Entity({ name: config.database.tables.address })
-export class Address{
-    @PrimaryGeneratedColumn()
-    id?: number
+export namespace Address {
 
-    @Column({ nullable: true, length: MAX_LENGTH_LABEL }) /** [WARNING]: Changing rules would delete all data. */
-    label?: string
+    export enum Status {
+        ACTIVE = "ACTIVE",
+        INACTIVE = "INACTIVE"
+    }
 
-    @Column()
-    privateKey: string
+    @Entity({ name: config.database.tables.address })
+    export class Model {
+        @PrimaryGeneratedColumn()
+        id?: number
 
-    @Column()
-    publicKey: string
+        @Column({ nullable: true, length: MAX_LENGTH_LABEL }) /** [WARNING]: Changing rules would delete all data. */
+        label?: string
 
-    @Column()
-    base58: string
+        @Column({ nullable: true })
+        balance?: string
 
-    @Column()
-    hex: string
+        @Column({ default: Status.INACTIVE })
+        status?: Address.Status = Status.INACTIVE
 
-    @ManyToOne(() => Wallet)
-    walletID: number
+        @Column({ name: "private_key" })
+        privateKey: string
+
+        @Column({ name: "public_key" })
+        publicKey: string
+
+        @Column()
+        base58: string
+
+        @Column()
+        hex: string
+
+        @ManyToOne(() => Wallet)
+        @JoinColumn({ name: "wallet_id" })
+        walletID: number
+    }
 }

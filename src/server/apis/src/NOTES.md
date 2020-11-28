@@ -11,3 +11,4 @@
 1. Restrict creating wallet via IP address.
 2. Optimize add entities to module.
 3. Catch queries errors.
+4. Gracefully Shutdown mechanism for the Synchronizer.

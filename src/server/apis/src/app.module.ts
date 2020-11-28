@@ -19,7 +19,7 @@ import { Synchronizer } from './worker/synchronizer.worker';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [Wallet, Address, Synchronizer.Progress],
+      entities: [Wallet, Address.Model, Synchronizer.Progress],
       synchronize: true,
       logging: false
     }),

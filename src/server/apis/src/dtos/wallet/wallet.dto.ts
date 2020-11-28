@@ -1,4 +1,4 @@
-const MAX_LENGTH_LABEL = 100
+const MAX_LENGTH_LABEL = 255
 
 class CreateWalletRequestDTO {
     label?: string
