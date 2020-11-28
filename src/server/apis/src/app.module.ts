@@ -23,6 +23,7 @@ import { Synchronizer } from './worker/synchronizer.worker';
       synchronize: true,
       logging: false
     }),
+    TypeOrmModule.forFeature([Wallet, Address.Model])
   ],
   controllers: [WalletController, AddressController],
   providers: [WalletService, AddressService],

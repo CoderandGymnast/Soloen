@@ -9,9 +9,9 @@ export class AddressController {
     constructor(
         private readonly addressService: AddressService,
         private readonly walletService: WalletService,
-        private readonly connection: Connection
+        // private readonly connection: Connection
     ) {
-        addressService.connectToDB()
+        // addressService.connectToDB()
     }
 
     @Post("/create")

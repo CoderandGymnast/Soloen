@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Address } from 'src/entities/address.entity';
-import { getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import TronWeb from "tronweb"
 import { CreateAddressRequestDTO, CreateAddressResponseDTO } from 'src/dtos/address/address.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AddressService {
 
-    private repository: Repository<Address.Model>
-
-    connectToDB() {
-        this.repository = getRepository(Address.Model)
-    }
+    constructor(
+        @InjectRepository(Address.Model)
+        private readonly repository: Repository<Address.Model>
+    ) { }
 
     async create(params: CreateAddressRequestDTO): Promise<CreateAddressResponseDTO> {
         const accounts = TronWeb.utils.accounts
