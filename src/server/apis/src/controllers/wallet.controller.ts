@@ -7,7 +7,6 @@ import { CreateWalletRequestDTO, CreateWalletResponseDTO, MAX_LENGTH_LABEL } fro
 export class WalletController {
   constructor(
     private readonly walletService: WalletService,
-    private readonly connection: Connection
   ) { }
 
   @Post("/create")

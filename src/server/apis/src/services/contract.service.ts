@@ -13,7 +13,7 @@ export class ContractService {
         private readonly addressService: AddressService
     ) { }
 
-    async create(request: CreateContractRequestDTO): Promice<CreateContractResponseDTO>x` {
+    async create(request: CreateContractRequestDTO): Promise<CreateContractResponseDTO>{
         const privateKey = await this.addressService.getPrivateKey(request.ownerAddress)
         const params = [
             request.toAddress,
