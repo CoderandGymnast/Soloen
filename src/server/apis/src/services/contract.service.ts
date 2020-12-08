@@ -27,8 +27,8 @@ export class ContractService {
     
         if(!response.result) throw Error(`[TRANSFER ERROR]: Could not transfer from '${request.ownerAddress}' to '${request.toAddress}'`)
 
-        return {
+        // return {
 
-        }
+        // }
     }
 }
