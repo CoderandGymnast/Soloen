@@ -52,6 +52,25 @@ export class AddressService {
         return (await this.repository.findOne({ base58: base58Address })).privateKey
     }
 
+    async doesExist(base58Address: string) {
+        const address =  await this.repository.findOne({ base58: base58Address })
+        return address ? true : false
+    }
+
+    /** [TODO]: Should use offline lib. */
+    async isValid(base58Address: string) {
+        try {
+            await TronWeb.trx.getAccount(base58Address)
+            return true
+        } catch (e) {
+            return false
+        }
+    }
+
+    async getBalance(base58Address: string) {
+        
+    }
+
     private emitEvent(hexAddress: string) {
         this.channel.emit(Event.ADDRESS, hexAddress)
     }

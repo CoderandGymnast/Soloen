@@ -9,6 +9,7 @@ import { AddressService } from './services/address.service';
 import { Address } from './entities/address.entity';
 import { Synchronizer } from './worker/synchronizer.worker';
 import {EventEmitter} from "events"
+import { ContractController } from "./controllers/contract.controller"
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import {EventEmitter} from "events"
     }),
     TypeOrmModule.forFeature([Wallet, Address.Model]),
   ],
-  controllers: [WalletController, AddressController],
+  controllers: [WalletController, AddressController, ContractController],
   providers: [WalletService, AddressService, EventEmitter],
 })
 export class AppModule {}
