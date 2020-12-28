@@ -9,6 +9,8 @@ export class AddressController {
 
     @Post("/create")
     async create(@Body() request: CreateContractRequestDTO): Promise<CreateContractResponseDTO> {
+        const ownerAddress = request.ownerAddress
+        console.log("Create contract...")
         return
     }
 }

@@ -13,7 +13,7 @@ export class ContractService {
         private readonly addressService: AddressService
     ) { }
 
-    async create(request: CreateContractRequestDTO): Promise<CreateContractResponseDTO>{
+    async create(request: CreateContractRequestDTO): Promise<void>{
         const privateKey = await this.addressService.getPrivateKey(request.ownerAddress)
         const params = [
             request.toAddress,
@@ -27,8 +27,6 @@ export class ContractService {
     
         if(!response.result) throw Error(`[TRANSFER ERROR]: Could not transfer from '${request.ownerAddress}' to '${request.toAddress}'`)
 
-        // return {
-
-        // }
+      
     }
 }

@@ -13,9 +13,10 @@ export class AddressController {
     @Post("/create")
     async create(@Body() request: CreateAddressRequestDTO): Promise<CreateAddressResponseDTO> {
 
-        if(!(await this.walletService.find(request.walletID)).length) throw new BadRequestException(`WALLET ID: '${request.walletID}' DOES NOT EXIST`)
-        if(!request.walletID) throw new BadRequestException("MISSING WALLET ID")
-        if(request.label.length >= MAX_LENGTH_LABEL) throw new BadRequestException(`MAX LENGTH LABEL: '${MAX_LENGTH_LABEL}'`)
+        if (!(await this.walletService.find(request.walletID)).length) throw new BadRequestException(`WALLET ID: '${request.walletID}' DOES NOT EXIST`)
+        if (!request.walletID) throw new BadRequestException("MISSING WALLET ID")
+        if (request.label)
+            if (request.label.length >= MAX_LENGTH_LABEL) throw new BadRequestException(`MAX LENGTH LABEL: '${MAX_LENGTH_LABEL}'`)
 
         return await this.addressService.create(request)
     }

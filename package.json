@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/CoderandGymnast/Soloen#readme",
   "dependencies": {
+    "@types/fb": "0.0.28",
     "@types/semaphore": "^1.1.0",
+    "fb": "^2.0.0",
     "jest": "^26.6.3",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
