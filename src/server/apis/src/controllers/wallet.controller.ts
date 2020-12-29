@@ -1,5 +1,4 @@
 import { BadRequestException, Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
-import { Connection } from 'typeorm';
 import { WalletService } from '../services/wallet.service';
 import { CreateWalletRequestDTO, CreateWalletResponseDTO, MAX_LENGTH_LABEL } from "../dtos/wallet/wallet.dto"
 
@@ -12,7 +11,8 @@ export class WalletController {
   @Post("/create")
   async create(@Body() request: CreateWalletRequestDTO): Promise<CreateWalletResponseDTO> {
 
-    if (request.label.length >= MAX_LENGTH_LABEL) throw new BadRequestException(`MAX LENGTH LABEL: ${MAX_LENGTH_LABEL}`)
+    if (request.label)
+      if (request.label.length >= MAX_LENGTH_LABEL) throw new BadRequestException(`MAX LENGTH LABEL: ${MAX_LENGTH_LABEL}`)
 
     return await this.walletService.create({ ...request })
   }
