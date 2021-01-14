@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // Reference: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            // "type": "pwa-msedge
+            "type": "node",
+            "request": "launch",
+            "name": "Soloen NestJS APIs",
+            "args": ["${workspaceFolder}/server/apis/src/main.ts"],
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector"
+        }
+    ]
+}
+
+// [NOTES]:
+// 1. node ...\main.ts

@@ -1,13 +1,19 @@
 const fetch = require('node-fetch');
-const FormData = require('form-data');
 
-const body = {
-    "label": "..."
+const callAPI = (urlPattern, body, callback) => {
+    fetch(`http://localhost:3000/${urlPattern}`, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {"Content-Type": "application/json"}
+    })
+    .then(res => res.text())
+    .then(response => callback(response))    
 }
 
-fetch('http://localhost:3000/wallet/create', {
-    method: 'POST', 
-    body:  JSON.stringify(body),
-    headers: { "Content-Type": "application/json" },
-}).then(res => res.text())
-.then(body => console.log(body))
+const createAddress = params => {
+    const walletID = JSON.parse(params).id
+    callAPI("address/create", {"walletID": walletID}, (params) => {console.log(params)})
+}
+
+
+callAPI("wallet/create", {"label": "Soloen III"}, createAddress)

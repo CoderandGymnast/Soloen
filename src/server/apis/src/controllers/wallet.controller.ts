@@ -9,11 +9,11 @@ export class WalletController {
   ) { }
 
   @Post("/create")
-  async create(@Body() request: CreateWalletRequestDTO): Promise<CreateWalletResponseDTO> {
+  async create(@Body() requestBody: CreateWalletRequestDTO): Promise<CreateWalletResponseDTO> {
 
-    if (request.label)
-      if (request.label.length >= MAX_LENGTH_LABEL) throw new BadRequestException(`MAX LENGTH LABEL: ${MAX_LENGTH_LABEL}`)
+    if (requestBody.label)
+      if (requestBody.label.length >= MAX_LENGTH_LABEL) throw new BadRequestException(`MAX LENGTH LABEL: ${MAX_LENGTH_LABEL}`)
 
-    return await this.walletService.create({ ...request })
+    return await this.walletService.create({ ...requestBody })
   }
 }

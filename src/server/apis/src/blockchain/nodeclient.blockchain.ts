@@ -1,13 +1,14 @@
-import { stat } from "fs"
+import { Injectable } from "@nestjs/common"
 import { Synchronizer } from "src/worker/synchronizer.worker"
 import TronWeb from "tronweb"
 import { getRepository } from "typeorm"
+import conf from "../config"
 
 const DEFAULT_ID = 1
 
 export class NodeClient {
 
-    readonly nodeClients: TronWeb
+    readonly nodeClients: TronWeb = []
 
     constructor(
         private readonly options: NodeClient.Options,
@@ -56,7 +57,7 @@ export class NodeClient {
 }
 
 export namespace NodeClient {
-
+    
     export class Options {
         fullHost: string
         eventServer: string

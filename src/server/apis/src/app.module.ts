@@ -10,6 +10,8 @@ import { Address } from './entities/address.entity';
 import { Synchronizer } from './worker/synchronizer.worker';
 import {EventEmitter} from "events"
 import { ContractController } from "./controllers/contract.controller"
+import { NodeClient } from './blockchain/nodeclient.blockchain';
+import Options = NodeClient.Options;
 
 @Module({
   imports: [

@@ -2,6 +2,7 @@ const MAX_LENGTH_LABEL = 255
 
 class CreateWalletRequestDTO {
     label?: string
+    xxx: String
 }
 
 class CreateWalletResponseDTO {

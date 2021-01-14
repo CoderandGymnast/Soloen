@@ -17,7 +17,7 @@ export namespace Contract {
 
         @Column({ name: "to_address" })
         toAddress: string
-
+    
         @Column()
         amount: string
     }
