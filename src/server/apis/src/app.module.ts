@@ -10,8 +10,7 @@ import { Address } from './entities/address.entity';
 import { Synchronizer } from './worker/synchronizer.worker';
 import {EventEmitter} from "events"
 import { ContractController } from "./controllers/contract.controller"
-import { NodeClient } from './blockchain/nodeclient.blockchain';
-import Options = NodeClient.Options;
+import { ContractService } from './services/contract.service';
 
 @Module({
   imports: [
@@ -30,6 +29,6 @@ import Options = NodeClient.Options;
     TypeOrmModule.forFeature([Wallet, Address.Model]),
   ],
   controllers: [WalletController, AddressController, ContractController],
-  providers: [WalletService, AddressService, EventEmitter],
+  providers: [WalletService, AddressService, EventEmitter, ContractService],
 })
 export class AppModule {}

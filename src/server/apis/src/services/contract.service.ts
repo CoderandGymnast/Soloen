@@ -2,12 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { CreateContractRequestDTO, CreateContractResponseDTO } from "src/dtos/contract/contract.dto";
 import { AddressService } from "./address.service";
 import TronWeb from "tronweb"
-import config from "src/config";
 
 @Injectable()
 export class ContractService {
-
-    private readonly nodeClient = new TronWeb({ fullHost: config.nodes.fullHost })
+ 
+    
+    /** [TODO]: Set up NodeClient as the system's provider & use IoC container to initiate instead of doing manually. */
+    nodeClients: TronWeb
 
     constructor(
         private readonly addressService: AddressService
@@ -21,12 +22,15 @@ export class ContractService {
             request.ownerAddress,
             { permissionId: 2 }
         ]
-        const unsignedContract = await this.nodeClient.transactionBuilder.sendTrx(...params)
-        const signedContract = await this.nodeClient.trx.sign(unsignedContract, privateKey)
-        const response = await this.nodeClient.trx.broadcast(signedContract)
+        const unsignedContract = await this.nodeClients.transactionBuilder.sendTrx(...params)
+        const signedContract = await this.nodeClients.trx.sign(unsignedContract, privateKey)
+        const response = await this.nodeClients.trx.broadcast(signedContract)
     
         if(!response.result) throw Error(`[TRANSFER ERROR]: Could not transfer from '${request.ownerAddress}' to '${request.toAddress}'`)
+    }
 
-      
+    initNodeClients(nodeClients) {
+        this.nodeClients = nodeClients
+        console.log("[CONTRACT SERVICE]: Node clients are initiated, Contract service is ready")
     }
 }

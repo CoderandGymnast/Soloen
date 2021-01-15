@@ -8,7 +8,7 @@ const DEFAULT_ID = 1
 
 export class NodeClient {
 
-    readonly nodeClients: TronWeb = []
+    private readonly nodeClients: TronWeb
 
     constructor(
         private readonly options: NodeClient.Options,
@@ -53,6 +53,10 @@ export class NodeClient {
     async updateSynchronizationProgress(progress: Synchronizer.Progress) {
         const repository = getRepository(Synchronizer.Progress)
         return await repository.save({ id: DEFAULT_ID, blockNumber: progress.blockNumber })
+    }
+
+    getNodeClients() {
+        return this.nodeClients
     }
 }
 
