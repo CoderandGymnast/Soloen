@@ -1,6 +1,7 @@
 import { BadRequestException, Body, Controller, Post } from "@nestjs/common";
 import { NodeClient } from "src/blockchain/nodeclient.blockchain";
 import { CreateContractRequestDTO, CreateContractResponseDTO } from "src/dtos/contract/contract.dto";
+import { Contract } from "src/entities/contract.entity";
 import { ContractService } from "src/services/contract.service";
 import { AddressService } from "../services/address.service";
 
@@ -25,8 +26,12 @@ export class ContractController {
         /** [NOTES]: Should check address format. */
         // if(!validationStatus) throw new BadRequestException(`ADDRESS '${ownerAddress}' IS INVALID`)
         
-        await this.contractService.create(request)
+        const contract = await this.contractService.create(request)
+        const response: CreateContractResponseDTO = {
+            id: contract.txid,
+            status: Contract.Status.PENDING
+        }
 
-        return
+        return response
     }
 }

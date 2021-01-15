@@ -25,7 +25,7 @@ async function bootstrap() {
   const nodeClient = new NodeClient(options)
   
   contractService.initNodeClients(nodeClient.getNodeClients())
-  
+
   const addressTracker = new AddressTracker(channel, addressService)
   await addressTracker.start()
 
@@ -34,6 +34,8 @@ async function bootstrap() {
   const synchronizer = new Synchronizer(nodeClient, listeners)
 
   await synchronizer.start()
+
+  console.log("[SOLOEN]: All services are ready...")
 }
 bootstrap();
 

@@ -8,7 +8,6 @@ class CreateContractRequestDTO {
 
 class CreateContractResponseDTO {
     id: string
-    hash: string
     status: Contract.Status
 }
 
