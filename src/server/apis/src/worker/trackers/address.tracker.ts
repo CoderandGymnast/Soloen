@@ -80,7 +80,7 @@ export class AddressTracker implements Synchronizer.Listener {
             }
             this.trackedData[index].balance = (parseInt(this.trackedData[index].balance) - contract.parameter.value.amount).toString()
             await this.addressService.updateBalance(this.trackedData[index].hex, this.trackedData[index].balance)
-            console.log(`[TRACKER]: Address '${TronWeb.address.fromHex(ownerAddress)}' sends '${contract.parameter.value.amount}' TRXs`)
+            console.log(`[TRACKER]: Address '${TronWeb.address.fromHex(ownerAddress)}' sends '${contract.parameter.value.amount}' SUNs`)
         } else if (this.addresses.includes(toAddress)) {
             const index = this.trackedData.findIndex(address => address.hex === toAddress)
             if (index === -1) {
@@ -89,7 +89,7 @@ export class AddressTracker implements Synchronizer.Listener {
             }
             this.trackedData[index].balance = (parseInt(this.trackedData[index].balance) + contract.parameter.value.amount).toString()
             await this.addressService.updateBalance(this.trackedData[index].hex, this.trackedData[index].balance)
-            console.log(`[TRACKER]: Address '${TronWeb.address.fromHex(toAddress)}' receives '${contract.parameter.value.amount}' TRXs`)
+            console.log(`[TRACKER]: Address '${TronWeb.address.fromHex(toAddress)}' receives '${contract.parameter.value.amount}' SUNs`)
         }
     }
 

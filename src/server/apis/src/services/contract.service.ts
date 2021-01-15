@@ -14,7 +14,7 @@ export class ContractService {
         private readonly addressService: AddressService
     ) { }
 
-    async create(request: CreateContractRequestDTO): Promise<void>{
+    async create(request: CreateContractRequestDTO) {
         const privateKey = await this.addressService.getPrivateKey(request.ownerAddress)
         const params = [
             request.toAddress,
@@ -22,11 +22,18 @@ export class ContractService {
             request.ownerAddress,
             { permissionId: 2 }
         ]
+
+        /** 
+         * [NOTES]:
+         * "[ExceptionsHandler] Cannot transfer TRX to the same account"
+         */
         const unsignedContract = await this.nodeClients.transactionBuilder.sendTrx(...params)
         const signedContract = await this.nodeClients.trx.sign(unsignedContract, privateKey)
         const response = await this.nodeClients.trx.broadcast(signedContract)
     
         if(!response.result) throw Error(`[TRANSFER ERROR]: Could not transfer from '${request.ownerAddress}' to '${request.toAddress}'`)
+        
+        return response
     }
 
     initNodeClients(nodeClients) {
@@ -34,3 +41,10 @@ export class ContractService {
         console.log("[CONTRACT SERVICE]: Node clients are initiated, Contract service is ready")
     }
 }
+
+/**
+ * [ERROR]: 
+ * 1. "[ExceptionsHandler] class org.tron.core.exception.ContractValidateException : Validate TransferContract error, no OwnerAccount.": 
+ * Reason: Owner account does not exist on the Tron Blockchain.
+ * Solution: Send TRXs to the owner account.
+ */
