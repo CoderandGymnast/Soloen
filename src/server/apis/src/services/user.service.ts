@@ -7,8 +7,8 @@ import { User } from '../entities/user.entity';
 export class UserService {
 
   constructor(
-    @InjectRepository(User.Model)
-    private readonly repository: Repository<User.Model>,
+    @InjectRepository(User.User_model)
+    private readonly repository: Repository<User.User_model>,
   ) { }
 
 }

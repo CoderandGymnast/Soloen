@@ -6,7 +6,7 @@ import { Wallet } from "./wallet.entity";
 export namespace User {
   
     @Entity({ name: config.database.tables.user})
-    export class Model {
+    export class User_model {
         @PrimaryGeneratedColumn()
         id_user?: number
         @Column({name: "user_email"})

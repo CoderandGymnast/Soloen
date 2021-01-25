@@ -25,11 +25,11 @@ import { UserService } from './services/user.service';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [User.Model,Wallet, Address.Model, Synchronizer.Progress],
+      entities: [User.User_model,Wallet, Address.Model, Synchronizer.Progress],
       synchronize: true,
       logging: false
     }),
-    TypeOrmModule.forFeature([Wallet, Address.Model,User.Model]),
+    TypeOrmModule.forFeature([Wallet, Address.Model,User.User_model]),
   ],
   controllers: [WalletController, AddressController, ContractController,UserController ],
   providers: [WalletService, AddressService, EventEmitter, ContractService,UserService],
