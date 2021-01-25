@@ -10,5 +10,14 @@ export class UserService {
     @InjectRepository(User.User_model)
     private readonly repository: Repository<User.User_model>,
   ) { }
+  async getUser(){
+
+  }
+  async login(){
+
+  }
+  async logout(){
+
+  }
 
 }
