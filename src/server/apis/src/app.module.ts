@@ -7,10 +7,13 @@ import { Wallet } from './entities/wallet.entity';
 import { AddressController } from './controllers/address.controller';
 import { AddressService } from './services/address.service';
 import { Address } from './entities/address.entity';
+import { User } from './entities/user.entity';
 import { Synchronizer } from './worker/synchronizer.worker';
 import {EventEmitter} from "events"
 import { ContractController } from "./controllers/contract.controller"
+import { UserController } from "./controllers/user.controller"
 import { ContractService } from './services/contract.service';
+import { UserService } from './services/user.service';
 
 @Module({
   imports: [
@@ -22,13 +25,13 @@ import { ContractService } from './services/contract.service';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [Wallet, Address.Model, Synchronizer.Progress],
+      entities: [User.Model,Wallet, Address.Model, Synchronizer.Progress],
       synchronize: true,
       logging: false
     }),
-    TypeOrmModule.forFeature([Wallet, Address.Model]),
+    TypeOrmModule.forFeature([Wallet, Address.Model,User.Model]),
   ],
-  controllers: [WalletController, AddressController, ContractController],
-  providers: [WalletService, AddressService, EventEmitter, ContractService],
+  controllers: [WalletController, AddressController, ContractController,UserController ],
+  providers: [WalletService, AddressService, EventEmitter, ContractService,UserService],
 })
 export class AppModule {}
