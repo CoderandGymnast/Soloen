@@ -20,7 +20,10 @@ export class ContractController {
         const ownerAddress = request.ownerAddress
         const toAddress = request.toAddress
 
-        if(ownerAddress == toAddress) throw new BadRequestException(ownerAddress+" COULD NOT TRANSFER TO THE SAME ACCOUNT "+toAddress)
+        if(ownerAddress == toAddress) {
+            console.log('[ERROR]:COULD NOT TRANSFER TO THE SAME ACCOUNT')
+            throw new BadRequestException(" COULD NOT TRANSFER TO THE SAME ACCOUNT ")
+        }
         const existStatus = await this.addressService.doesExist(ownerAddress)
         if (!existStatus) throw new BadRequestException(`ADDRESS '${ownerAddress}' DOES NOT EXIST`)
         const validationStatus = await this.addressService.isValid(toAddress)
