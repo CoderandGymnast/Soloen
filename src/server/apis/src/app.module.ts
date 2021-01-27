@@ -11,7 +11,10 @@ import { Synchronizer } from './worker/synchronizer.worker';
 import {EventEmitter} from "events"
 import { ContractController } from "./controllers/contract.controller"
 import { ContractService } from './services/contract.service';
-
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import {AppController} from './app.controller'
+import { UserEntity } from './entities/users.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -22,13 +25,15 @@ import { ContractService } from './services/contract.service';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [Wallet, Address.Model, Synchronizer.Progress],
+      entities: [Wallet, Address.Model, Synchronizer.Progress,UserEntity.UserModel],
       synchronize: true,
       logging: false
     }),
-    TypeOrmModule.forFeature([Wallet, Address.Model]),
+    TypeOrmModule.forFeature([Wallet, Address.Model,UserEntity.UserModel]),
+    AuthModule,
+    UsersModule,
   ],
-  controllers: [WalletController, AddressController, ContractController],
+  controllers: [WalletController, AddressController, ContractController,AppController],
   providers: [WalletService, AddressService, EventEmitter, ContractService],
 })
 export class AppModule {}

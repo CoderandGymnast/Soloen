@@ -1,4 +1,5 @@
-import { BadRequestException, Body, Controller, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { NodeClient } from "src/blockchain/nodeclient.blockchain";
 import { CreateContractRequestDTO, CreateContractResponseDTO } from "src/dtos/contract/contract.dto";
 import { Contract } from "src/entities/contract.entity";
@@ -12,14 +13,14 @@ export class ContractController {
         private readonly addressService: AddressService,
         private readonly contractService: ContractService
     ) { }
-
+    @UseGuards(JwtAuthGuard)
     @Post("/create")
     async create(@Body() request: CreateContractRequestDTO): Promise<CreateContractResponseDTO> {
 
         const ownerAddress = request.ownerAddress
         const toAddress = request.toAddress
 
-        if(ownerAddress == toAddress) throw new BadRequestException("COULD NOT TRANSFER TO THE SAME ACCOUNT")
+        if(ownerAddress == toAddress) throw new BadRequestException(ownerAddress+" COULD NOT TRANSFER TO THE SAME ACCOUNT "+toAddress)
         const existStatus = await this.addressService.doesExist(ownerAddress)
         if (!existStatus) throw new BadRequestException(`ADDRESS '${ownerAddress}' DOES NOT EXIST`)
         const validationStatus = await this.addressService.isValid(toAddress)

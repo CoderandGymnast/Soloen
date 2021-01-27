@@ -1,5 +1,5 @@
 import { MAX_LENGTH_LABEL } from "src/dtos/address/address.dto";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import config from "../config"
 import { Wallet } from "./wallet.entity";
 
@@ -36,8 +36,9 @@ export namespace Address {
         @Column()
         hex: string
 
-        @ManyToOne(() => Wallet)
+        @Column({name: "wallet_id"})
+        @OneToOne(() => Wallet)
         @JoinColumn({ name: "wallet_id" })
-        walletID: number
+        walletID?: number
     }
 }
