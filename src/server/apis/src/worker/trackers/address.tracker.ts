@@ -23,6 +23,7 @@ export class AddressTracker implements Synchronizer.Listener {
     }
 
     async start() {
+        console.log(this.channel)
         this.addListener()
         await this.syncToDB()
         console.log("[TRACKER]: Address Tracker successfully started")
@@ -51,8 +52,10 @@ export class AddressTracker implements Synchronizer.Listener {
         }
     }
 
-    private addListener() {
+    private addListener() {//evenlistener
+        console.log("Listener is added...")
         this.channel.on(Event.ADDRESS, hexAddress => {
+            console.log("Hung dep trai")
             this.trackedData.push({
                 hex: hexAddress,
                 balance: "0"
@@ -72,6 +75,7 @@ export class AddressTracker implements Synchronizer.Listener {
     private async processContract(contract: NodeClient.Contract) {
         const ownerAddress = contract.parameter.value.owner_address.toUpperCase()
         const toAddress = contract.parameter.value.to_address.toUpperCase()
+        //console.log(contract)
         if (this.addresses.includes(ownerAddress)) {
             const index = this.trackedData.findIndex(address => address.hex === ownerAddress)
             if (index === -1) {
@@ -81,16 +85,27 @@ export class AddressTracker implements Synchronizer.Listener {
             this.trackedData[index].balance = (parseInt(this.trackedData[index].balance) - contract.parameter.value.amount).toString()
             await this.addressService.updateBalance(this.trackedData[index].hex, this.trackedData[index].balance)
             console.log(`[TRACKER]: Address '${TronWeb.address.fromHex(ownerAddress)}' sends '${contract.parameter.value.amount}' SUNs`)
-        } else if (this.addresses.includes(toAddress)) {
+        } 
+        
+        if (this.addresses.includes(toAddress)) {
             const index = this.trackedData.findIndex(address => address.hex === toAddress)
             if (index === -1) {
                 console.log("[WARNING]: 2 address lists at Address Tracker are not match")
                 return
             }
+            if(!this.addresses.includes(ownerAddress)){
+                console.log(`[TRACKER]: Address '${TronWeb.address.fromHex(ownerAddress)}' sends '${contract.parameter.value.amount}' SUNs`) 
+            }
             this.trackedData[index].balance = (parseInt(this.trackedData[index].balance) + contract.parameter.value.amount).toString()
             await this.addressService.updateBalance(this.trackedData[index].hex, this.trackedData[index].balance)
             console.log(`[TRACKER]: Address '${TronWeb.address.fromHex(toAddress)}' receives '${contract.parameter.value.amount}' SUNs`)
+            console.log('Enjoy it !!')
         }
+
+            // 1. Check with txHashes.
+            // 2. Call Contract Service to update transaction on DB: Pending - Confirmed. 
+            // 4. Update receiver.
+            // 3. return.
     }
 
     private isTransferContract(contract: NodeClient.Contract) {

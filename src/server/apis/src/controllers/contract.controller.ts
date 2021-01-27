@@ -31,6 +31,17 @@ export class ContractController {
         // if(!validationStatus) throw new BadRequestException(`ADDRESS '${ownerAddress}' IS INVALID`)
         
         const contract = await this.contractService.create(request)
+        console.log(contract)
+        const contractInfo ={ 
+            hash:contract.txid,
+            ownerAddress:request.ownerAddress,
+            toAddress:request.toAddress,
+            amount:request.amount,
+            timestamp:contract.transaction.raw_data.timestamp,
+            status:Contract.Status.PENDING
+        }
+        console.log(contractInfo)
+        const update_contract_dto = await this.contractService.updateContractTable(contractInfo)
         const response: CreateContractResponseDTO = {
             id: contract.txid,
             status: Contract.Status.PENDING

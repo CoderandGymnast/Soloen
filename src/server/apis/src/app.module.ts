@@ -17,6 +17,7 @@ import {AppController} from './app.controller'
 import { UserEntity } from './entities/users.entity';
 import { UserController } from './controllers/users.controller';
 import { UsersService } from './users/users.service';
+import { Contract } from './entities/contract.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -27,11 +28,11 @@ import { UsersService } from './users/users.service';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [Wallet, Address.Model, Synchronizer.Progress,UserEntity.UserModel],
+      entities: [Wallet, Address.Model, Synchronizer.Progress,UserEntity.UserModel,Contract.ContractModel],
       synchronize: true,
       logging: false
     }),
-    TypeOrmModule.forFeature([Wallet, Address.Model,UserEntity.UserModel]),
+    TypeOrmModule.forFeature([Wallet, Address.Model,UserEntity.UserModel,Contract.ContractModel]),
     AuthModule,
     UsersModule,
   ],

@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { CreateContractRequestDTO, CreateContractResponseDTO } from "src/dtos/contract/contract.dto";
+import { CreateContractRequestDTO, CreateContractResponseDTO, UpdateContractRequestDTO, UpdateContractResponseDTO } from "src/dtos/contract/contract.dto";
 import { AddressService } from "./address.service";
 import TronWeb from "tronweb"
+import { Contract } from "src/entities/contract.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class ContractService {
@@ -11,6 +14,8 @@ export class ContractService {
     nodeClients: TronWeb
 
     constructor(
+        @InjectRepository(Contract.ContractModel)
+        private readonly repository: Repository<Contract.ContractModel>,
         private readonly addressService: AddressService
     ) { }
 
@@ -35,7 +40,15 @@ export class ContractService {
         
         return response
     }
-
+    async updateContractTable(params:UpdateContractRequestDTO):Promise<UpdateContractResponseDTO>{
+        await this.repository.insert(params)
+        return{
+            message :'Make contract'
+        } 
+    }
+    async getAll(){
+        return await this.repository.find()
+    }
     initNodeClients(nodeClients) {
         this.nodeClients = nodeClients
         console.log("[CONTRACT SERVICE]: Node clients are initiated, Contract service is ready")

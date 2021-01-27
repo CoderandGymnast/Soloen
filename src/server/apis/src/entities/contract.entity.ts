@@ -2,7 +2,10 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import config from "../config"
 
 export namespace Contract {
-
+    export enum Status {
+        PENDING = "PENDING",
+        CONFIRM = "CONFIRM"
+    }
     @Entity({ name: config.database.tables.contract })
     export class ContractModel {
 
@@ -17,13 +20,16 @@ export namespace Contract {
 
         @Column({ name: "to_address" })
         toAddress: string
-    
+
+        @Column({ default: Status.PENDING })
+        status?: Contract.Status = Status.CONFIRM
+
+        @Column()
+        timestamp: string
+        
         @Column()
         amount: string
     }
 
-    export enum Status {
-        PENDING = "PENDING",
-        CONFIRM = "CONFIRM"
-    }
+
 }

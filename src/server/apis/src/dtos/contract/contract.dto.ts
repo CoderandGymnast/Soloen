@@ -10,5 +10,15 @@ class CreateContractResponseDTO {
     id: string
     status: Contract.Status
 }
+class UpdateContractRequestDTO{
+            // hash: string
+            // owner_address:string
+            // to_address:string
+            // amount:string
+            // status:string
+}
+class UpdateContractResponseDTO{
+    
+}
 
-export { CreateContractRequestDTO, CreateContractResponseDTO }
+export { CreateContractRequestDTO, CreateContractResponseDTO,UpdateContractRequestDTO,UpdateContractResponseDTO }

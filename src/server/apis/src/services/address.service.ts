@@ -10,12 +10,19 @@ import { Event } from './events/events';
 @Injectable()
 export class AddressService {
 
+    workAroundChannel: EventEmitter    
+
     constructor(
         @InjectRepository(Address.Model)
         private readonly repository: Repository<Address.Model>,
         private readonly channel: EventEmitter
     ) {
         this.channel.addListener(Event.ADDRESS, () => { })
+        // this.channel.on(Event.ADDRESS, (hexAddress) => {
+        //     console.log("Address is created....")
+        //     console.log(hexAddress)
+        // })
+        this.workAroundChannel = this.channel
     }
 
     async create(params: CreateAddressRequestDTO): Promise<CreateAddressResponseDTO> {
@@ -31,7 +38,10 @@ export class AddressService {
         }
         const result = await this.repository.insert(address)
 
+        console.log("1")
+        console.log(account.address.hex)
         this.emitEvent(account.address.hex)
+        console.log("2")
 
         return {
             id: result.raw.insertId,
@@ -71,6 +81,8 @@ export class AddressService {
         return (await this.repository.findOne({ base58: base58Address })).balance
     }
     private emitEvent(hexAddress: string) {
+        console.log("Long aw lskjasldaladkajla")
         this.channel.emit(Event.ADDRESS, hexAddress)
+        console.log(this.channel)
     }
 }
