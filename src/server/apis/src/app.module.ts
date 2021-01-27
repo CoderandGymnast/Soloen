@@ -15,9 +15,6 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import {AppController} from './app.controller'
 import { UserEntity } from './entities/users.entity';
-import { Contract } from './entities/contract.entity';
-import { UsersService } from './users/users.service';
-import { UserController } from './controllers/users.controller';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -28,15 +25,15 @@ import { UserController } from './controllers/users.controller';
       username: config.database.username,
       password: config.database.password,
       database: config.database.name,
-      entities: [Wallet, Address.Model, Synchronizer.Progress,UserEntity.UserModel,Contract.Contract_Model],
+      entities: [Wallet, Address.Model, Synchronizer.Progress,UserEntity.UserModel],
       synchronize: true,
       logging: false
     }),
-    TypeOrmModule.forFeature([Wallet, Address.Model,UserEntity.UserModel,Contract.Contract_Model]),
+    TypeOrmModule.forFeature([Wallet, Address.Model,UserEntity.UserModel]),
     AuthModule,
     UsersModule,
   ],
-  controllers: [WalletController, AddressController, ContractController,AppController,UserController],
-  providers: [WalletService, AddressService, EventEmitter, ContractService,UsersService],
+  controllers: [WalletController, AddressController, ContractController,AppController],
+  providers: [WalletService, AddressService, EventEmitter, ContractService],
 })
 export class AppModule {}
