@@ -5,7 +5,7 @@ const config = {
     },
     database: {
         host: process.env.DB_HOST || "localhost",
-        port: parseInt(process.env.DB_PORT) || 3306,
+        port: parseInt(process.env.DB_PORT) || 3307,
         name: process.env.DB_NAME || "soloen",
         type: process.env.DB_TYPE || "mysql",
         username: process.env.DB_USERNAME || "root",
@@ -14,7 +14,8 @@ const config = {
             wallet: process.env.DB_TABLE_WALLET || "wallet",
             address: process.env.DB_TABLE_ADDRESS || "address",
             progress: process.env.DB_PROGRESS || "progress",
-            contract: process.env.DB_CONTRACT || "contract"
+            contract: process.env.DB_CONTRACT || "contract",
+            user: process.env.DB_USER || "user"
         }   
     },
     nodes: {

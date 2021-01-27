@@ -13,4 +13,10 @@ class CreateAddressResponseDTO {
     status: Address.Status
 }
 
-export { CreateAddressRequestDTO, CreateAddressResponseDTO, MAX_LENGTH_LABEL }
+class GetbalanceRequestDTO {
+    base58Address: string
+}
+class GetbalanceResponseDTO {
+    balance: string
+}
+export { CreateAddressRequestDTO, CreateAddressResponseDTO, MAX_LENGTH_LABEL,GetbalanceRequestDTO,GetbalanceResponseDTO }

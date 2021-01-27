@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Address } from 'src/entities/address.entity';
 import { Repository } from 'typeorm';
 import TronWeb from "tronweb"
-import { CreateAddressRequestDTO, CreateAddressResponseDTO } from 'src/dtos/address/address.dto';
+import { CreateAddressRequestDTO, CreateAddressResponseDTO,GetbalanceRequestDTO,GetbalanceResponseDTO   } from 'src/dtos/address/address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EventEmitter } from 'events';
 import { Event } from './events/events';
@@ -67,10 +67,9 @@ export class AddressService {
         }
     }
 
-    async getBalance(base58Address: string) {
-        
+    async getBalance(base58Address: string){
+        return (await this.repository.findOne({ base58: base58Address })).balance
     }
-
     private emitEvent(hexAddress: string) {
         this.channel.emit(Event.ADDRESS, hexAddress)
     }
