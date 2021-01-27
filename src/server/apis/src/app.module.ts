@@ -15,6 +15,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import {AppController} from './app.controller'
 import { UserEntity } from './entities/users.entity';
+import { UserController } from './controllers/users.controller';
+import { UsersService } from './users/users.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -33,7 +35,7 @@ import { UserEntity } from './entities/users.entity';
     AuthModule,
     UsersModule,
   ],
-  controllers: [WalletController, AddressController, ContractController,AppController],
-  providers: [WalletService, AddressService, EventEmitter, ContractService],
+  controllers: [WalletController, AddressController, ContractController,AppController,UserController],
+  providers: [WalletService, AddressService, EventEmitter, ContractService,UsersService],
 })
 export class AppModule {}

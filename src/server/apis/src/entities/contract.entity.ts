@@ -4,7 +4,7 @@ import config from "../config"
 export namespace Contract {
 
     @Entity({ name: config.database.tables.contract })
-    export class Model {
+    export class ContractModel {
 
         @PrimaryGeneratedColumn()
         id?: number
