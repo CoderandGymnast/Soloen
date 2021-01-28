@@ -23,7 +23,6 @@ export class AddressTracker implements Synchronizer.Listener {
     }
 
     async start() {
-        console.log(this.channel)
         this.addListener()
         await this.syncToDB()
         console.log("[TRACKER]: Address Tracker successfully started")
@@ -53,9 +52,7 @@ export class AddressTracker implements Synchronizer.Listener {
     }
 
     private addListener() {//evenlistener
-        console.log("Listener is added...")
         this.channel.on(Event.ADDRESS, hexAddress => {
-            console.log("Hung dep trai")
             this.trackedData.push({
                 hex: hexAddress,
                 balance: "0"

@@ -10,9 +10,6 @@ import { AddressTracker } from './worker/trackers/address.tracker';
 
 import { Event } from './services/events/events';
 
-//import { ContractTracker } from './worker/trackers/contract.tracker';
-//import { ContractTracker } from './worker/trackers/contract.tracker';
-
 async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -20,18 +17,8 @@ async function bootstrap() {
   await app.listen(3000)
 
   const channel = app.get(EventEmitter)
-//   channel.on(Event.ADDRESS, hexAddress => {
-//     console.log("........")
-//     console.log(hexAddress)
-// })  
   const addressService = app.get(AddressService)
-  const workAroundChannel = addressService.workAroundChannel
-  console.log("Workaround Channel: " + workAroundChannel)
 
-  workAroundChannel.on(Event.ADDRESS, hexAddress => {
-    console.log("Hung dep trai")
-    console.log(hexAddress)
-})  
   const contractService = app.get(ContractService)
 
   const options: NodeClient.Options = {
@@ -42,7 +29,7 @@ async function bootstrap() {
   
   contractService.initNodeClients(nodeClient.getNodeClients())
 
-  const addressTracker = new AddressTracker(workAroundChannel, addressService)
+  const addressTracker = new AddressTracker(channel, addressService)
   await addressTracker.start()
 
   // const contractTracker = new ContractTracker(channel, contractService)
